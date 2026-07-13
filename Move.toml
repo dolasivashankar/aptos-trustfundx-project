@@ -1,0 +1,31 @@
+[package]
+name = "TrustFundX"
+version = "1.0.0"
+authors = ["TrustFundX Team"]
+license = "MIT"
+
+[addresses]
+# Replace with your deployed account address before publishing
+# Example: trustfundx = "0xYOUR_ACCOUNT_ADDRESS"
+trustfundx = "0x110cafd6504243e9e61a29d502d452bb3332bb1fa5b7d91105d810c02a3bd62c"
+
+[dev-addresses]
+# Used during `aptos move test`
+trustfundx = "0xCAFE"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dependencies.AptosStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-stdlib"
+
+[dependencies.MoveStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/move-stdlib"
+
+[dev-dependencies]
