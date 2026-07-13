@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustFundX - Decentralized AI-Powered Token Vault</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="glow-bg"></div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="logo-area">
+            <div class="logo-icon">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+            <div class="logo-text">
+                <span class="brand-name">TrustFund<span class="accent-text">X</span></span>
+                <span class="tagline">Secure Move Vault</span>
+            </div>
+        </div>
+        <div class="nav-controls">
+            <div class="network-badge">
+                <span class="indicator"></span>
+                Aptos Devnet
+            </div>
+            <button id="connectBtn" class="connect-btn">
+                <i class="fa-solid fa-wallet"></i>
+                <span id="connectBtnText">Connect Wallet</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Workspace -->
+    <main class="dashboard-container">
+        <!-- Configuration Card -->
+        <section class="config-section glass-card">
+            <div class="section-title">
+                <i class="fa-solid fa-sliders"></i>
+                <h2>Contract configuration</h2>
+            </div>
+            <div class="config-grid">
+                <div class="input-group">
+                    <label for="contractAddr">Contract Deploy Address</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="contractAddr" value="0x110cafd6504243e9e61a29d502d452bb3332bb1fa5b7d91105d810c02a3bd62c" placeholder="0x...">
+                        <button class="icon-btn" onclick="copyValue('contractAddr')" title="Copy"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="vaultAddr">Active Vault Address</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="vaultAddr" value="0x110cafd6504243e9e61a29d502d452bb3332bb1fa5b7d91105d810c02a3bd62c" placeholder="0x...">
+                        <button class="icon-btn" onclick="copyValue('vaultAddr')" title="Copy"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Overview Grid -->
+        <section class="stats-grid">
+            <div class="stat-card glass-card">
+                <div class="stat-icon purple-glow"><i class="fa-solid fa-piggy-bank"></i></div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Deposited</span>
+                    <h3 id="totalDeposited">0.00 <span class="unit">APT</span></h3>
+                </div>
+            </div>
+            <div class="stat-card glass-card">
+                <div class="stat-icon cyan-glow"><i class="fa-solid fa-lock-open"></i></div>
+                <div class="stat-info">
+                    <span class="stat-label">Available Balance</span>
+                    <h3 id="availableBalance">0.00 <span class="unit">APT</span></h3>
+                </div>
+            </div>
+            <div class="stat-card glass-card">
+                <div class="stat-icon gold-glow"><i class="fa-solid fa-business-time"></i></div>
+                <div class="stat-info">
+                    <span class="stat-label">Allocated Balance</span>
+                    <h3 id="allocatedBalance">0.00 <span class="unit">APT</span></h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Interaction Split Panels -->
+        <div class="panels-grid">
+            <!-- Left Panel: Administration -->
+            <section class="panel-card glass-card">
+                <div class="panel-header">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <h2>Admin Operations</h2>
+                </div>
+
+                <div class="accordion">
+                    <!-- Deposit -->
+                    <div class="operation-box">
+                        <h3>Deposit Tokens</h3>
+                        <div class="form-group">
+                            <input type="number" id="depositAmount" step="0.01" min="0" placeholder="Amount (APT)">
+                            <button onclick="handleDeposit()" class="primary-btn">Deposit</button>
+                        </div>
+                    </div>
+
+                    <!-- Allocate -->
+                    <div class="operation-box">
+                        <h3>Allocate Funds</h3>
+                        <div class="form-group-stack">
+                            <input type="text" id="allocateRecipient" placeholder="Beneficiary Address (0x...)">
+                            <div class="form-row">
+                                <input type="number" id="allocateAmount" step="0.01" min="0" placeholder="Amount (APT)">
+                                <button onclick="handleAllocate()" class="primary-btn">Allocate</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Withdraw -->
+                    <div class="operation-box">
+                        <h3>Withdraw Unused Funds</h3>
+                        <div class="form-group">
+                            <input type="number" id="withdrawAmount" step="0.01" min="0" placeholder="Amount (APT)">
+                            <button onclick="handleWithdraw()" class="primary-btn">Withdraw</button>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Admin -->
+                    <div class="operation-box">
+                        <h3>Transfer Admin Control</h3>
+                        <div class="form-group-stack">
+                            <input type="text" id="newAdminAddr" placeholder="New Admin Address (0x...)">
+                            <button onclick="handleTransferAdmin()" class="danger-btn">Transfer Control</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Beneficiary Claims -->
+            <section class="panel-card glass-card">
+                <div class="panel-header">
+                    <i class="fa-solid fa-gift"></i>
+                    <h2>Beneficiary Claims</h2>
+                </div>
+
+                <div class="claim-dashboard">
+                    <div class="claim-info-card">
+                        <span class="claim-label">Your Claimable Allocation</span>
+                        <h2 id="claimableAmount">0.00 <span class="unit">APT</span></h2>
+                        <p id="claimStatusText" class="claim-status-info">Connect wallet to view your allocations.</p>
+                    </div>
+
+                    <button id="claimBtn" onclick="handleClaim()" class="action-btn-large" disabled>
+                        <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                        Claim Allocation
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- System Alerts and Info Logs -->
+        <section class="system-logs glass-card">
+            <div class="panel-header">
+                <i class="fa-solid fa-terminal"></i>
+                <h2>Platform Logs & Transactions</h2>
+            </div>
+            <div id="logConsole" class="console-box">
+                <div class="console-line system">[System] TrustFundX Dashboard Loaded. Please connect your Aptos wallet to begin.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 TrustFundX Dev Suite. Built on Aptos Move.</p>
+    </footer>
+
+    <!-- App Logic Script -->
+    <script src="app.js"></script>
+</body>
+</html>
