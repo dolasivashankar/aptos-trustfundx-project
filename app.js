@@ -130,13 +130,17 @@ async function callViewFunction(funcName, args = []) {
         });
 
         if (!response.ok) {
-            throw new Error(`RPC returned HTTP status ${response.status}`);
+            const errData = await response.json().catch(() => ({}));
+            if (errData.message && errData.message.includes("can't be found")) {
+                console.warn(`Module/Function not found on-chain: ${funcName}. Likely not deployed yet.`);
+            }
+            return null;
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error(`View call error for ${funcName}:`, error);
+        console.error(`Network or parsing error for view call ${funcName}:`, error);
         return null;
     }
 }
@@ -145,6 +149,21 @@ async function callViewFunction(funcName, args = []) {
 async function fetchVaultState() {
     const vaultAddr = document.getElementById("vaultAddr").value.trim();
     if (!vaultAddr.startsWith("0x")) return;
+
+    let isDeployed = true;
+
+    // First check if vault exists
+    const existsRes = await callViewFunction("vault_exists", [vaultAddr]);
+    if (existsRes && existsRes[0] === true) {
+        document.getElementById("logConsole").querySelector(".system").innerText = "[System] Vault detected on-chain. Ready.";
+    } else {
+        isDeployed = false;
+        logConsole("System", "Vault/Contract not detected at this address. Please publish and initialize your vault.");
+        document.getElementById("totalDeposited").innerHTML = `Not Deployed`;
+        document.getElementById("availableBalance").innerHTML = `Not Deployed`;
+        document.getElementById("allocatedBalance").innerHTML = `Not Deployed`;
+        return;
+    }
 
     // 1. Get Total deposited
     const totalRes = await callViewFunction("get_total_balance", [vaultAddr]);
