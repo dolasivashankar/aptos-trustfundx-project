@@ -132,7 +132,7 @@ async function callViewFunction(funcName, args = []) {
         if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
             if (errData.message && errData.message.includes("can't be found")) {
-                console.warn(`Module/Function not found on-chain: ${funcName}. Likely not deployed yet.`);
+                console.log(`Module/Function not found on-chain: ${funcName}. Likely not deployed yet.`);
             }
             return null;
         }
