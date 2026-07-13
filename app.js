@@ -70,7 +70,16 @@ async function connectWallet() {
     try {
         logConsole("System", "Connecting to wallet...");
         const response = await wallet.connect();
-        walletAddress = response.address;
+        
+        // Handle both standard object response { address, publicKey } and raw address string fallback
+        if (response) {
+            walletAddress = response.address || response;
+        }
+
+        if (!walletAddress || typeof walletAddress !== "string") {
+            throw new Error("Invalid address returned from wallet provider.");
+        }
+        
         isConnected = true;
         
         // Update connection state UI
