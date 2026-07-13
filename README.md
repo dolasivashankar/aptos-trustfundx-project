@@ -267,7 +267,7 @@ aptos move test --compute-coverage
 
 ## 🚀 Deployment
 
-See [deployment.md](./deployment.md) for the full step-by-step guide.
+See(https://aptos-trustfundx-project.vercel.app/) for the full step-by-step guide.
 
 **Quick Deploy to Devnet:**
 
@@ -487,9 +487,9 @@ All events can be queried on [Aptos Explorer](https://explorer.aptoslabs.com) or
 
 ## 📸 Screenshots
 
-> _Screenshots from Aptos Explorer showing deployed transactions_
->
-> **[Add screenshots here after deployment]**
+
+> **[<img width="1877" height="952" alt="Screenshot 2026-07-13 151209" src="https://github.com/user-attachments/assets/a8d8a548-97fd-4482-9b93-bae1ccb6276d" />
+]**
 >
 > Recommended views:
 > - Vault creation transaction
